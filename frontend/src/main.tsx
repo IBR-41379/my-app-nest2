@@ -1,9 +1,9 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import App from "./App";
-import AnnouncementsList from "./modules/announcements/AnnouncementsList";
-import AnnouncementDetail from "./modules/announcements/AnnouncementDetail";
+import App from "./App.tsx";
+import AnnouncementsList from "./modules/announcements/AnnouncementsList.tsx";
+import AnnouncementDetail from "./modules/announcements/AnnouncementDetail.tsx";
 import "./index.css";
 
 const router = createBrowserRouter([
