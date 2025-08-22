@@ -5,12 +5,14 @@ import {
   Param, 
   Headers, 
   NotFoundException,
-
+  HttpStatus,
+  HttpException,
+  Res,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiHeader } from '@nestjs/swagger';
-
+import type { Response } from 'express';
 import * as crypto from 'crypto';
-import { AnnouncementResponseDto } from 'src/dto/announcement-response.dto';
+import { AnnouncementResponseDto } from '../dto/announcement-response.dto';
 import { AnnouncementsService } from './announcements.services';
 
 @ApiTags('announcements')
@@ -25,6 +27,10 @@ export class AnnouncementsController {
     description: 'List of announcements',
     type: [AnnouncementResponseDto]
   })
+  @ApiResponse({ 
+    status: 304, 
+    description: 'Not modified - cached version is still valid'
+  })
   @ApiHeader({
     name: 'If-None-Match',
     description: 'ETag for caching',
@@ -32,19 +38,24 @@ export class AnnouncementsController {
   })
   async findAll(
     @Headers('if-none-match') ifNoneMatch: string,
-  ): Promise<AnnouncementResponseDto[]> {
+    @Res() response: Response,
+  ): Promise<void> {
     const announcements = await this.announcementsService.findAll();
     
     // Generate ETag
     const dataString = JSON.stringify(announcements);
-    const etag = crypto.createHash('md5').update(dataString).digest('hex');
+    const etag = `"${crypto.createHash('md5').update(dataString).digest('hex')}"`;
+    
+    // Set ETag header
+    response.set('ETag', etag);
     
     // Check if client has the same version
     if (ifNoneMatch === etag) {
-      throw new NotModifiedException();
+      response.status(304).send();
+      return;
     }
     
-    return announcements;
+    response.json(announcements);
   }
 
   @Get(':id')

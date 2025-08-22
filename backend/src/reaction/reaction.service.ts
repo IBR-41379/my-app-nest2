@@ -1,12 +1,12 @@
 // src/services/reactions.service.ts
 import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { ReactionType } from '../entities/reaction.entity';
-import type { AnnouncementsRepository } from 'src/repositories/announcement.repository';
+import { InMemoryAnnouncementsRepository } from '../repositories/in-memory-announcements.repository';
 
 @Injectable()
 export class ReactionsService {
   constructor(
-    private readonly announcementsRepository: AnnouncementsRepository,
+    private readonly announcementsRepository: InMemoryAnnouncementsRepository,
   ) {}
 
   async create(
@@ -68,6 +68,11 @@ export class ReactionsService {
     const announcement = await this.announcementsRepository.findOne(announcementId);
     if (!announcement) {
       throw new NotFoundException(`Announcement with ID ${announcementId} not found`);
+    }
+
+    const existingReaction = await this.announcementsRepository.findReactionByUser(announcementId, userId);
+    if (!existingReaction) {
+      throw new NotFoundException(`No reaction found for user ${userId} on announcement ${announcementId}`);
     }
     
     await this.announcementsRepository.removeReaction(announcementId, userId);

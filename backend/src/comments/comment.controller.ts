@@ -10,18 +10,18 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiQuery } from '@nestjs/swagger';
 import { ThrottlerGuard } from '@nestjs/throttler';
-import { CommentResponseDto } from 'src/dto/comment-response.dto';
-import { CreateCommentDto } from 'src/dto/create-comment.dto';
+import { CommentResponseDto } from '../dto/comment-response.dto';
+import { CreateCommentDto } from '../dto/create-comment.dto';
 import { CommentsService } from './comment.services';
 
 
 @ApiTags('comments')
 @Controller('announcements/:id/comments')
-@UseGuards(ThrottlerGuard)
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
   @Post()
+  @UseGuards(ThrottlerGuard)
   @ApiOperation({ summary: 'Add a comment to an announcement' })
   @ApiResponse({ 
     status: 201, 

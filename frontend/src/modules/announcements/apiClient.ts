@@ -1,6 +1,6 @@
 import type { AnnouncementSummary, Comment, Paginated, ReactionType } from "./types";
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
 const FRONTEND_USER_ID = "demo-user-1"; // replace with real auth in production
 
 type Method = "GET" | "POST" | "DELETE";
@@ -71,6 +71,11 @@ export const AnnouncementsAPI = {
       method: "GET",
       etagKey: "announcements:list"
     });
+    return data;
+  },
+
+  async getById(id: string): Promise<AnnouncementSummary> {
+    const { data } = await request<AnnouncementSummary>(`/announcements/${id}`);
     return data;
   },
 

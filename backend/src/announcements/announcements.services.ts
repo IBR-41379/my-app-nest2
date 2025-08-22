@@ -1,13 +1,13 @@
 // src/services/announcements.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ReactionType } from '../entities/reaction.entity';
-import { AnnouncementResponseDto } from 'src/dto/announcement-response.dto';
-import type { AnnouncementsRepository } from 'src/repositories/announcement.repository';
+import { AnnouncementResponseDto } from '../dto/announcement-response.dto';
+import { InMemoryAnnouncementsRepository } from '../repositories/in-memory-announcements.repository';
 
 @Injectable()
 export class AnnouncementsService {
   constructor(
-    private readonly announcementsRepository: AnnouncementsRepository,
+    private readonly announcementsRepository: InMemoryAnnouncementsRepository,
   ) {}
 
   async findAll(): Promise<AnnouncementResponseDto[]> {

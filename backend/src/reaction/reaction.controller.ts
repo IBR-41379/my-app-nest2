@@ -8,7 +8,7 @@ import {
   Headers,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiHeader } from '@nestjs/swagger';
-import { CreateReactionDto } from 'src/dto/create-reaction.dto';
+import { CreateReactionDto } from '../dto/create-reaction.dto';
 import { ReactionsService } from './reaction.service';
 
 
