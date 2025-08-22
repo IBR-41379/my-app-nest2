@@ -1,8 +1,8 @@
 // src/services/announcements.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ReactionType } from '../entities/reaction.entity';
-import { AnnouncementResponseDto } from 'dto/announcement-response.dto';
-import type { AnnouncementsRepository } from 'repositories/announcement.repository';
+import { AnnouncementResponseDto } from 'src/dto/announcement-response.dto';
+import type { AnnouncementsRepository } from 'src/repositories/announcement.repository';
 
 @Injectable()
 export class AnnouncementsService {

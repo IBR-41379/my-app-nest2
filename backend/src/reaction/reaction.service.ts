@@ -1,7 +1,7 @@
 // src/services/reactions.service.ts
 import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { ReactionType } from '../entities/reaction.entity';
-import type { AnnouncementsRepository } from 'repositories/announcement.repository';
+import type { AnnouncementsRepository } from 'src/repositories/announcement.repository';
 
 @Injectable()
 export class ReactionsService {

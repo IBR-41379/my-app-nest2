@@ -1,8 +1,8 @@
 // src/services/comments.service.ts
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
-import { CommentResponseDto } from 'dto/comment-response.dto';
-import { CreateCommentDto } from 'dto/create-comment.dto';
-import type { AnnouncementsRepository } from 'repositories/announcement.repository';
+import { CommentResponseDto } from 'src/dto/comment-response.dto';
+import { CreateCommentDto } from 'src/dto/create-comment.dto';
+import type { AnnouncementsRepository } from 'src/repositories/announcement.repository';
 
 @Injectable()
 export class CommentsService {
